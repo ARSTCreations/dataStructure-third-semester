@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="TBQueueNasabah" target="17" />
+      <module name="TBQueueNasabah" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>

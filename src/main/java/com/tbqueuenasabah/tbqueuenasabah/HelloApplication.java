@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) {
+        //base
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10); gridPane.setVgap(10);
@@ -79,16 +80,8 @@ public class HelloApplication extends Application {
             }
         });
 
-        next1.setOnAction(n1->{
-            textMelayani1.setText("Sedang Melayani Nasabah Nomor "+queue.dequeue());
-        });
-
-        next2.setOnAction(n2->{
-            textMelayani2.setText("Sedang Melayani Nasabah Nomor "+queue.dequeue());
-        });
-
-
-
+        next1.setOnAction(n1-> textMelayani1.setText("Sedang Melayani Nasabah Nomor "+queue.dequeue()));
+        next2.setOnAction(n2-> textMelayani2.setText("Sedang Melayani Nasabah Nomor "+queue.dequeue()));
         stage.show();
     }
 
