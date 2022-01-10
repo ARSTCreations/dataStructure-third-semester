@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
 
 public class HelloApplication extends Application {
     @Override
@@ -38,6 +39,7 @@ public class HelloApplication extends Application {
         Text textNomorAntrian2 = new Text("Nomor Antrian Saat Ini: ");
         Button next1 = new Button("NEXT");
         Button next2 = new Button("NEXT");
+        Alert a = new Alert(Alert.AlertType.WARNING);
 
         //style
         style(textAntrianNasabah, textTeller1, textMelayani1, textTeller2, textMelayani2);
@@ -65,23 +67,52 @@ public class HelloApplication extends Application {
         gridPane.add(next2,2,6);
 
         inButton.setOnAction(in->{
-            if (queue.isGantian()){
-                queue.incrementAntrianKe();
-                queue.enqueue(queue.getAntrianKe());
-                textNomorAntrian1.setText("Nomor Antrian Saat Ini: "+queue.getAntrianKe());
-                queue.toggleGantian();
-                System.out.println("1: "+queue.getAntrianKe());
-            }else {
-                queue.incrementAntrianKe();
-                queue.enqueue(queue.getAntrianKe());
-                textNomorAntrian2.setText("Nomor Antrian Saat Ini: "+queue.getAntrianKe());
-                queue.toggleGantian();
-                System.out.println("2: "+queue.getAntrianKe());
+            if(queue.size() == 20) {
+                a.setContentText("Jumlah antrian untuk saat ini penuh !");
+                a.show();
+            }else{
+                if (queue.isGantian()){
+                    queue.incrementAntrianKe();
+                    queue.enqueue(queue.getAntrianKe());
+                    textNomorAntrian1.setText("Nomor Antrian Saat Ini: "+queue.getAntrianKe());
+                    queue.toggleGantian();
+                    System.out.println("1: "+queue.getAntrianKe());
+                }else {
+                    queue.incrementAntrianKe();
+                    queue.enqueue(queue.getAntrianKe());
+                    textNomorAntrian2.setText("Nomor Antrian Saat Ini: "+queue.getAntrianKe());
+                    queue.toggleGantian();
+                    System.out.println("2: "+queue.getAntrianKe());
+                }
             }
         });
 
-        next1.setOnAction(n1-> textMelayani1.setText("Sedang Melayani Nasabah Nomor "+queue.dequeue()));
-        next2.setOnAction(n2-> textMelayani2.setText("Sedang Melayani Nasabah Nomor "+queue.dequeue()));
+        next1.setOnAction(n1-> {
+            if(queue.size() == 0){
+                a.setContentText("Untuk saat ini antrian masih kosong !");
+                a.show();
+            }else{
+                textSilahkanKe.setText("Nasabah nomor " + queue.dequeue()+ " silahkan ke Teller 1");
+                textMelayani1.setText("Sedang Melayani Nasabah Nomor "+queue.getAntrianNow());
+            }
+            if(queue.size() == 1){
+                textNomorAntrian1.setText("Sedang Melayani Nasabah Nomor : - ");
+                textNomorAntrian2.setText("Sedang Melayani Nasabah Nomor : - ");
+            }
+        });
+        next2.setOnAction(n2-> {
+            if(queue.size() == 0){
+                a.setContentText("Untuk saat ini antrian masih kosong !");
+                a.show();
+            }else{
+                textSilahkanKe.setText("Nasabah nomor " + queue.dequeue()+ " silahkan ke Teller 2");
+                textMelayani2.setText("Sedang Melayani Nasabah Nomor "+queue.getAntrianNow());
+            }
+            if(queue.size() == 1){
+                textNomorAntrian2.setText("Sedang Melayani Nasabah Nomor : - ");
+                textNomorAntrian1.setText("Sedang Melayani Nasabah Nomor : - ");
+            }
+        });
         stage.show();
     }
 

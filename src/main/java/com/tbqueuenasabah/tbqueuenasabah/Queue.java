@@ -34,10 +34,22 @@ class FirstLastList{
         first=first.next;
         return returnVal;
     }
+
+    public int queueSize() {
+        Link current = first;
+        int minSize = 0;
+        while (current != null) {
+            minSize++;
+            current = current.next;
+        }
+        return minSize;
+    }
 }
 
 public class Queue{
     FirstLastList theList;
+    int antrianNow;
+
     public Queue(){
         theList=new FirstLastList();
     }
@@ -45,7 +57,11 @@ public class Queue{
         theList.insertLast(j);
     }
     public int dequeue(){
-        return theList.deleteFirst();
+        antrianNow = theList.deleteFirst();
+        return antrianNow;
+    }
+    public int getAntrianNow(){
+        return antrianNow;
     }
 
     boolean gantian = true;
@@ -63,4 +79,10 @@ public class Queue{
     public int getAntrianKe() {
         return antrianKe;
     }
+
+    public int size() {
+        return theList.queueSize();
+    }
+
+
 }
